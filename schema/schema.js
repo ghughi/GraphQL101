@@ -1,5 +1,6 @@
 const graphql = require('graphql');                                             // 3. Writting a GraphQL Schema
-const _ = require('lodash');                                                    // 3. Writting a GraphQL Schema
+//const _ = require('lodash');                                                  // 3. Writting a GraphQL Schema
+const axios = require('axios');                                                 // 4. Async Resolve Getting Data From Json-Server
 
 const {                                                                         // 3. Writting a GraphQL Schema
     GraphQLObjectType,                                                          // 3. Writting a GraphQL Schema
@@ -29,7 +30,9 @@ const RootQuery = new GraphQLObjectType({                                       
         type: UserType,                                                         // 3. Writting a GraphQL Schema
         args: { id: { type: GraphQLString }},                                   // 3. Writting a GraphQL Schema
         resolve(parentValue, args) {                                            // 3. Writting a GraphQL Schema
-            return _.find(users, { id: args.id });                              // 3. Writting a GraphQL Schema
+            //return _.find(users, { id: args.id });                            // 3. Writting a GraphQL Schema
+            return axios.get(`http://${process.env.IP}:8081/users/${args.id}`)  // 4. Async Resolve Getting Data From Json-Server
+                .then(resp => resp.data );                                      // 4. Async Resolve Getting Data From Json-Server
         }                                                                       // 3. Writting a GraphQL Schema
     }                                                                           // 3. Writting a GraphQL Schema
 }                                                                               // 3. Writting a GraphQL Schema    
