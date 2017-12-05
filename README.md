@@ -1,12 +1,11 @@
-# GRAPHQL - EXAMPLE 1 
+# GRAPHQL - QUERY EXAMPLE 1 
 <pre>
-GraphQL QUERY
 <code>
 {
   user(id: "23") {
     id,
     firstName,
     age
-  } 
+  } gi
 }
 </code></pre>

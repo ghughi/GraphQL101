@@ -14,12 +14,29 @@ const users = [                                                                 
     {id: '47', firstName: 'Samanatha', age: 21}                                 // 3. Writting a GraphQL Schema
 ];                                                                              // 3. Writting a GraphQL Schema    
 
+const CompanyType = new GraphQLObjectType({                                     // 5. Getting Users and Company related data
+    name: 'Company',                                                            // 5. Getting Users and Company related data
+    fields: {                                                                   // 5. Getting Users and Company related data
+        id: { type: GraphQLString },                                            // 5. Getting Users and Company related data
+        name: { type: GraphQLString },                                          // 5. Getting Users and Company related data
+        description: { type: GraphQLString }                                    // 5. Getting Users and Company related data
+}                                                                               // 5. Getting Users and Company related data    
+});                                                                             // 5. Getting Users and Company related data
+
 const UserType = new GraphQLObjectType({                                        // 3. Writting a GraphQL Schema
     name: 'User',                                                               // 3. Writting a GraphQL Schema
     fields: {                                                                   // 3. Writting a GraphQL Schema
         id: { type: GraphQLString },                                            // 3. Writting a GraphQL Schema
         firstName: { type: GraphQLString },                                     // 3. Writting a GraphQL Schema
-        age: { type: GraphQLInt }                                               // 3. Writting a GraphQL Schema
+        age: { type: GraphQLInt },                                              // 3. Writting a GraphQL Schema
+        company: {                                                              // 5. Getting Users and Company related data
+            type: CompanyType,                                                  // 5. Getting Users and Company related data
+            resolve(parentValue, args) {                                        // 5. Getting Users and Company related data    
+                //console.log(parentValue);                                     // 5. Getting Users and Company related data
+                return axios.get(`http://${process.env.IP}:8081/companies/${parentValue.companyId}`)    // 5. Getting Users and Company related data
+                    .then(resp => resp.data );                                                          // 5. Getting Users and Company related data
+            }                                                                   // 5. Getting Users and Company related data
+        }                                                                       // 5. Getting Users and Company related data
 }                                                                               // 3. Writting a GraphQL Schema    
 });                                                                             // 3. Writting a GraphQL Schema
 
